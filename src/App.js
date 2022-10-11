@@ -3,7 +3,8 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-// import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
+
+import ThemeSettings from "./components/ThemeSettings";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Calendar from "./pages/Calendar";
@@ -14,8 +15,7 @@ import Editor from "./pages/Editor";
 import Employees from "./pages/Employees";
 import Kanban from "./pages/Kanban";
 import Orders from "./pages/Orders";
-// import {Calendar,ColorPicker,Customers,Ecommerce,Editor,Employees,Kanban,Orders} from '../src/pages'
-// import {Area,Line,Bar,ColorMapping,Pie,Pyramid,Stacked,Financial} from "../src/pages/charts"
+
 import Area from "./pages/charts/Area";
 import Line from "./pages/charts/Line";
 import Bar from "./pages/charts/Bar";
@@ -27,7 +27,15 @@ import Financial from "./pages/charts/Financial";
 import "./App.css";
 import { useStateContext } from "./contexts/ContextProvider";
 function App() {
-  const { activeMenu } = useStateContext();
+  const {
+    setCurrentColor,
+    setCurrentMode,
+    currentMode,
+    activeMenu,
+    currentColor,
+    themeSettings,
+    setThemeSettings,
+  } = useStateContext();
   return (
     <div>
       <BrowserRouter>
@@ -36,6 +44,7 @@ function App() {
             <TooltipComponent content="Settings" position="fixed">
               <button
                 type="button"
+                onClick={() => setThemeSettings(true)}
                 className="text-3xl p-3 hover:drop-shadow-xl hover:bg-light-gray text-white"
                 style={{ background: "blue", borderRadius: "50%" }}
               >
@@ -61,14 +70,16 @@ function App() {
               <Navbar />
             </div>
             <div>
+              {themeSettings && <ThemeSettings />}
+
               <Routes>
                 {/* Dashboard */}
-                {/* <Route path='/' element={<Ecommerce/>} /> */}
+                <Route path="/" element={<Ecommerce />} />
                 <Route path="/ecommerce" element={<Ecommerce />} />
                 {/* Pages */}
-                <Route path="/order" element={<Orders />} />
+                <Route path="/orders" element={<Orders />} />
                 <Route path="/employees" element={<Employees />} />
-                <Route path="/customer" element={<Customers />} />
+                <Route path="/customers" element={<Customers />} />
                 {/* Apps */}
                 <Route path="/kanban" element={<Kanban />} />
                 <Route path="/editor" element={<Editor />} />
